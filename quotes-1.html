@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《惶然录》语录 - 冷门书籍语录合集</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; }
+        /* 页面加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body { 
+            background-color: #f9f7f5; 
+            color: #333; 
+            line-height: 1.8; 
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        /* 响应式导航栏（滚动吸顶） */
+        .nav { 
+            background-color: #fff; 
+            padding: 15px 0; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            position: sticky; 
+            top: 0; 
+            z-index: 999; 
+            transition: all 0.3s ease;
+        }
+        .nav.scroll {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 12px 0;
+        }
+        .nav-container { 
+            width: 90%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #6d4c41; 
+            text-decoration: none;
+        }
+        .nav-links a { 
+            margin-left: 30px; 
+            text-decoration: none; 
+            color: #666; 
+            transition: color 0.3s; 
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #6d4c41;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { 
+            color: #6d4c41; 
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        /* 移动端导航适配 */
+        @media (max-width: 768px) {
+            .nav-links a {
+                margin-left: 15px;
+                font-size: 14px;
+            }
+            .logo {
+                font-size: 18px;
+            }
+        }
+        /* 书籍详情模块（升级排版+新增收藏按钮） */
+        .book-detail { 
+            width: 90%; 
+            max-width: 900px; 
+            margin: 60px auto; 
+            background-color: #fff; 
+            padding: 50px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+        }
+        .book-header { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            position: relative;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0d4cc;
+        }
+        .book-header h1 { 
+            color: #6d4c41; 
+            font-size: 32px; 
+            margin-bottom: 15px; 
+            letter-spacing: 1px;
+        }
+        .book-header .author { 
+            color: #999; 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+        }
+        /* 新增：收藏按钮 */
+        .collect-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #fff;
+            color: #6d4c41;
+            border: 1px solid #6d4c41;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        .collect-btn:hover, .collect-btn.active {
+            background-color: #6d4c41;
+            color: #fff;
+        }
+        .book-intro { 
+            color: #666; 
+            margin-bottom: 50px; 
+            padding: 25px; 
+            background-color: #f9f7f5; 
+            border-radius: 10px; 
+            font-size: 15px;
+            line-height: 1.9;
+        }
+        .quotes-title { 
+            color: #6d4c41; 
+            font-size: 24px; 
+            margin-bottom: 30px; 
+            border-bottom: 2px solid #e0d4cc; 
+            padding-bottom: 15px; 
+        }
+        .quotes-list { 
+            margin-bottom: 40px; 
+        }
+        .quote-item { 
+            margin-bottom: 35px; 
+            padding-left: 25px; 
+            border-left: 3px solid #e0d4cc; 
+            transition: all 0.3s ease;
+        }
+        .quote-item:hover {
+            border-left-color: #6d4c41;
+            padding-left: 30px;
+        }
+        .quote-item p { 
+            font-style: italic; 
+            color: #555; 
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .quote-item .note {
+            color: #999;
+            font-size: 13px;
+            font-style: normal;
+        }
+        .back-btn { 
+            display: inline-block; 
+            text-decoration: none; 
+            color: #6d4c41; 
+            border: 1px solid #6d4c41; 
+            padding: 12px 24px; 
+            border-radius: 6px; 
+            transition: all 0.3s; 
+            font-size: 15px;
+        }
+        .back-btn:hover { 
+            background-color: #6d4c41; 
+            color: #fff; 
+        }
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background-color: #6d4c41;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(109, 76, 65, 0.3);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* 页脚 */
+        .footer { 
+            background-color: #6d4c41; 
+            color: #fff; 
+            text-align: center; 
+            padding: 30px 0; 
+            margin-top: 80px;
+        }
+        .footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        .footer .copyright {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav" id="nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">冷门语录合集</a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="books.html">全部书籍</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 书籍详情模块 -->
+    <div class="book-detail">
+        <div class="book-header">
+            <h1>《惶然录》</h1>
+            <div class="author">[葡] 费尔南多·佩索阿 著 / 韩少功 译</div>
+            <button class="collect-btn" id="collectBtn">
+                <span>收藏本书</span>
+                <span>★</span>
+            </button>
+        </div>
+        <div class="book-intro">
+            <p>《惶然录》是葡萄牙作家费尔南多·佩索阿的代表作，也是20世纪现代主义文学的经典之作。佩索阿一生未离开过里斯本，以无数个笔名（异名）书写内心世界，《惶然录》便是以“伯纳多·索阿雷斯”的笔名创作的散文合集。书中没有连贯的情节，只有对日常琐碎的记录、对自我的剖析，以及对存在的哲思——从办公室的窗景到街头的行人，从内心的迷茫到对自由的向往，文字细腻而孤独，平淡中蕴含着直击人心的力量。这本书因缺乏传统小说的叙事结构，始终未成为大众流行读物，却在小众读者群体中被奉为“精神圣经”，道尽了现代人的孤独与精神困境。</p>
+        </div>
+        <div class="quotes-title">精选语录</div>
+        <div class="quotes-list">
+            <div class="quote-item">
+                <p>“我是一个散步者，一个徘徊者，尤利西斯式的人物，不是为了回家，而仅仅是为了徘徊。”</p>
+                <div class="note">—— 来自《惶然录》第72节</div>
+            </div>
+            <div class="quote-item">
+                <p>“去生活就是去思考，去感受，去行动，而这一切都在我的内心世界里完成。”</p>
+                <div class="note">—— 来自《惶然录》第108节</div>
+            </div>
+            <div class="quote-item">
+                <p>“世界的全部问题，在于我不能与世界合拍，也不能与自己合拍。”</p>
+                <div class="note">—— 来自《惶然录》第156节</div>
+            </div>
+            <div class="quote-item">
+                <p>“我对世界的全部了解，就在于我一无所知，而这是我唯一确定的事情。”</p>
+                <div class="note">—— 来自《惶然录》第189节</div>
+            </div>
+            <div class="quote-item">
+                <p>“生活的意义，在于它没有意义，而我们必须为它赋予一个意义。”</p>
+                <div class="note">—— 来自《惶然录》第217节</div>
+            </div>
+        </div>
+        <a href="books.html" class="back-btn">返回全部书籍</a>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p>冷门书籍语录合集站 | 由AI生成 + 人类指挥打造</p>
+        <p class="copyright">© 2025 冷门语录合集 保留所有权利</p>
+    </div>
+
+    <!-- 交互脚本（导航+回到顶部+收藏按钮） -->
+    <script>
+        // 导航栏滚动吸顶
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scroll');
+            } else {
+                nav.classList.remove('scroll');
+            }
+        });
+
+        // 回到顶部
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 收藏按钮交互
+        const collectBtn = document.getElementById('collectBtn');
+        collectBtn.addEventListener('click', () => {
+            collectBtn.classList.toggle('active');
+            if (collectBtn.classList.contains('active')) {
+                collectBtn.innerHTML = '<span>已收藏本书</span><span>★</span>';
+                // 纯前端本地存储，刷新后仍保留状态
+                localStorage.setItem('collected_book_1', 'true');
+            } else {
+                collectBtn.innerHTML = '<span>收藏本书</span><span>★</span>';
+                localStorage.removeItem('collected_book_1');
+            }
+        });
+
+        // 页面加载时恢复收藏状态
+        window.onload = () => {
+            if (localStorage.getItem('collected_book_1') === 'true') {
+                collectBtn.classList.add('active');
+                collectBtn.innerHTML = '<span>已收藏本书</span><span>★</span>';
+            }
+        };
+    </script>
+</body>
+</html>

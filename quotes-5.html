@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《窄门》语录 - 冷门书籍语录合集</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; }
+        /* 页面加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body { 
+            background-color: #f9f7f5; 
+            color: #333; 
+            line-height: 1.8; 
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        /* 响应式导航栏（滚动吸顶） */
+        .nav { 
+            background-color: #fff; 
+            padding: 15px 0; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            position: sticky; 
+            top: 0; 
+            z-index: 999; 
+            transition: all 0.3s ease;
+        }
+        .nav.scroll {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 12px 0;
+        }
+        .nav-container { 
+            width: 90%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #6d4c41; 
+            text-decoration: none;
+        }
+        .nav-links a { 
+            margin-left: 30px; 
+            text-decoration: none; 
+            color: #666; 
+            transition: color 0.3s; 
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #6d4c41;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { 
+            color: #6d4c41; 
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        /* 移动端导航适配 */
+        @media (max-width: 768px) {
+            .nav-links a {
+                margin-left: 15px;
+                font-size: 14px;
+            }
+            .logo {
+                font-size: 18px;
+            }
+        }
+        /* 书籍详情模块（升级排版+新增收藏按钮） */
+        .book-detail { 
+            width: 90%; 
+            max-width: 900px; 
+            margin: 60px auto; 
+            background-color: #fff; 
+            padding: 50px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+        }
+        .book-header { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            position: relative;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0d4cc;
+        }
+        .book-header h1 { 
+            color: #6d4c41; 
+            font-size: 32px; 
+            margin-bottom: 15px; 
+            letter-spacing: 1px;
+        }
+        .book-header .author { 
+            color: #999; 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+        }
+        /* 新增：收藏按钮 */
+        .collect-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #fff;
+            color: #6d4c41;
+            border: 1px solid #6d4c41;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        .collect-btn:hover, .collect-btn.active {
+            background-color: #6d4c41;
+            color: #fff;
+        }
+        .book-intro { 
+            color: #666; 
+            margin-bottom: 50px; 
+            padding: 25px; 
+            background-color: #f9f7f5; 
+            border-radius: 10px; 
+            font-size: 15px;
+            line-height: 1.9;
+        }
+        .quotes-title { 
+            color: #6d4c41; 
+            font-size: 24px; 
+            margin-bottom: 30px; 
+            border-bottom: 2px solid #e0d4cc; 
+            padding-bottom: 15px; 
+        }
+        .quotes-list { 
+            margin-bottom: 35px; 
+        }
+        .quote-item { 
+            margin-bottom: 35px; 
+            padding-left: 25px; 
+            border-left: 3px solid #e0d4cc; 
+            transition: all 0.3s ease;
+        }
+        .quote-item:hover {
+            border-left-color: #6d4c41;
+            padding-left: 30px;
+        }
+        .quote-item p { 
+            font-style: italic; 
+            color: #555; 
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .quote-item .note {
+            color: #999;
+            font-size: 13px;
+            font-style: normal;
+        }
+        .back-btn { 
+            display: inline-block; 
+            text-decoration: none; 
+            color: #6d4c41; 
+            border: 1px solid #6d4c41; 
+            padding: 12px 24px; 
+            border-radius: 6px; 
+            transition: all 0.3s; 
+            font-size: 15px;
+        }
+        .back-btn:hover { 
+            background-color: #6d4c41; 
+            color: #fff; 
+        }
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background-color: #6d4c41;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(109, 76, 65, 0.3);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* 页脚 */
+        .footer { 
+            background-color: #6d4c41; 
+            color: #fff; 
+            text-align: center; 
+            padding: 30px 0; 
+            margin-top: 80px;
+        }
+        .footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        .footer .copyright {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav" id="nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">冷门语录合集</a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="books.html">全部书籍</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 书籍详情模块 -->
+    <div class="book-detail">
+        <div class="book-header">
+            <h1>《窄门》</h1>
+            <div class="author">[法] 安德烈·纪德 著 / 李玉民 译</div>
+            <button class="collect-btn" id="collectBtn">
+                <span>收藏本书</span>
+                <span>★</span>
+            </button>
+        </div>
+        <div class="book-intro">
+            <p>《窄门》是法国作家安德烈·纪德的代表作之一，发表于1909年。小说讲述了主人公杰罗姆与表姐阿莉莎之间的爱情故事——两人从小青梅竹马，彼此深爱，却因阿莉莎深受宗教思想影响，认为只有通过“窄门”（通往天国的艰难之路），才能获得永恒的幸福，于是她刻意压抑自己的爱情，不断自我放逐，最终在孤独中死去。纪德通过这段悲剧爱情，探讨了爱情与信仰、欲望与理性、自由与束缚的冲突，文字细腻优美，充满宗教情怀与哲思。这部作品因主题深刻、情感内敛，在文学史上备受推崇，却因宗教色彩浓厚、情节平淡，难以被大众读者接受，成为小众文学中的经典之作。</p>
+        </div>
+        <div class="quotes-title">精选语录</div>
+        <div class="quotes-list">
+            <div class="quote-item">
+                <p>“你们要进窄门，因为引到灭亡，那门是宽的，路是大的，进去的人也多；引到永生，那门是窄的，路是小的，找着的人也少。”</p>
+                <div class="note">—— 来自《窄门》第一章（引用《圣经》）</div>
+            </div>
+            <div class="quote-item">
+                <p>“爱情若是为了永恒，便只能在痛苦中绽放。”</p>
+                <div class="note">—— 来自《窄门》第二章</div>
+            </div>
+            <div class="quote-item">
+                <p>“我深爱着你，却只能看着你走向孤独，因为这是你选择的道路。”</p>
+                <div class="note">—— 来自《窄门》第三章</div>
+            </div>
+            <div class="quote-item">
+                <p>“信仰是一盏明灯，却也可能成为一把枷锁，困住我们最真实的情感。”</p>
+                <div class="note">—— 来自《窄门》第三章</div>
+            </div>
+            <div class="quote-item">
+                <p>“永恒的幸福，或许就是在回忆中，守护着那段未曾圆满的爱情。”</p>
+                <div class="note">—— 来自《窄门》结尾</div>
+            </div>
+        </div>
+        <a href="books.html" class="back-btn">返回全部书籍</a>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p>冷门书籍语录合集站 | 由AI生成 + 人类指挥打造</p>
+        <p class="copyright">© 2025 冷门语录合集 保留所有权利</p>
+    </div>
+
+    <!-- 交互脚本（导航+回到顶部+收藏按钮） -->
+    <script>
+        // 导航栏滚动吸顶
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scroll');
+            } else {
+                nav.classList.remove('scroll');
+            }
+        });
+
+        // 回到顶部
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 收藏按钮交互
+        const collectBtn = document.getElementById('collectBtn');
+        collectBtn.addEventListener('click', () => {
+            collectBtn.classList.toggle('active');
+            if (collectBtn.classList.contains('active')) {
+                collectBtn.innerHTML = '<span>已收藏本书</span><span>★</span>';
+                // 纯前端本地存储，刷新后仍保留状态
+                localStorage.setItem('collected_book_5', 'true');
+            } else {
+                collectBtn.innerHTML = '<span>收藏本书</span><span>★</span>';
+                localStorage.removeItem('collected_book_5');
+            }
+        });
+
+        // 页面加载时恢复收藏状态
+        window.onload = () => {
+            if (localStorage.getItem('collected_book_5') === 'true') {
+                collectBtn.classList.add('active');
+                collectBtn.innerHTML = '<span>已收藏本书</span><span>★</span>';
+            }
+        };
+    </script>
+</body>
+</html>

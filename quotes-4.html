@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《山月记》语录 - 冷门书籍语录合集</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; }
+        /* 页面加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body { 
+            background-color: #f9f7f5; 
+            color: #333; 
+            line-height: 1.8; 
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        /* 响应式导航栏（滚动吸顶） */
+        .nav { 
+            background-color: #fff; 
+            padding: 15px 0; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            position: sticky; 
+            top: 0; 
+            z-index: 999; 
+            transition: all 0.3s ease;
+        }
+        .nav.scroll {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 12px 0;
+        }
+        .nav-container { 
+            width: 90%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #6d4c41; 
+            text-decoration: none;
+        }
+        .nav-links a { 
+            margin-left: 30px; 
+            text-decoration: none; 
+            color: #666; 
+            transition: color 0.3s; 
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #6d4c41;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { 
+            color: #6d4c41; 
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        /* 移动端导航适配 */
+        @media (max-width: 768px) {
+            .nav-links a {
+                margin-left: 15px;
+                font-size: 14px;
+            }
+            .logo {
+                font-size: 18px;
+            }
+        }
+        /* 书籍详情模块（升级排版+新增收藏按钮） */
+        .book-detail { 
+            width: 90%; 
+            max-width: 900px; 
+            margin: 60px auto; 
+            background-color: #fff; 
+            padding: 50px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+        }
+        .book-header { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            position: relative;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0d4cc;
+        }
+        .book-header h1 { 
+            color: #6d4c41; 
+            font-size: 32px; 
+            margin-bottom: 15px; 
+            letter-spacing: 1px;
+        }
+        .book-header .author { 
+            color: #999; 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+        }
+        /* 新增：收藏按钮 */
+        .collect-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #fff;
+            color: #6d4c41;
+            border: 1px solid #6d4c41;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        .collect-btn:hover, .collect-btn.active {
+            background-color: #6d4c41;
+            color: #fff;
+        }
+        .book-intro { 
+            color: #666; 
+            margin-bottom: 50px; 
+            padding: 25px; 
+            background-color: #f9f7f5; 
+            border-radius: 10px; 
+            font-size: 15px;
+            line-height: 1.9;
+        }
+        .quotes-title { 
+            color: #6d4c41; 
+            font-size: 24px; 
+            margin-bottom: 30px; 
+            border-bottom: 2px solid #e0d4cc; 
+            padding-bottom: 15px; 
+        }
+        .quotes-list { 
+            margin-bottom: 35px; 
+        }
+        .quote-item { 
+            margin-bottom: 35px; 
+            padding-left: 25px; 
+            border-left: 3px solid #e0d4cc; 
+            transition: all 0.3s ease;
+        }
+        .quote-item:hover {
+            border-left-color: #6d4c41;
+            padding-left: 30px;
+        }
+        .quote-item p { 
+            font-style: italic; 
+            color: #555; 
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .quote-item .note {
+            color: #999;
+            font-size: 13px;
+            font-style: normal;
+        }
+        .back-btn { 
+            display: inline-block; 
+            text-decoration: none; 
+            color: #6d4c41; 
+            border: 1px solid #6d4c41; 
+            padding: 12px 24px; 
+            border-radius: 6px; 
+            transition: all 0.3s; 
+            font-size: 15px;
+        }
+        .back-btn:hover { 
+            background-color: #6d4c41; 
+            color: #fff; 
+        }
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background-color: #6d4c41;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(109, 76, 65, 0.3);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* 页脚 */
+        .footer { 
+            background-color: #6d4c41; 
+            color: #fff; 
+            text-align: center; 
+            padding: 30px 0; 
+            margin-top: 80px;
+        }
+        .footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        .footer .copyright {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav" id="nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">冷门语录合集</a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="books.html">全部书籍</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 书籍详情模块 -->
+    <div class="book-detail">
+        <div class="book-header">
+            <h1>《山月记》</h1>
+            <div class="author">[日] 中岛敦 著 / 徐建雄 译</div>
+            <button class="collect-btn" id="collectBtn">
+                <span>收藏本书</span>
+                <span>★</span>
+            </button>
+        </div>
+        <div class="book-intro">
+            <p>《山月记》是日本作家中岛敦的短篇小说集，收录了《山月记》《弟子》《李陵》等八篇作品，发表于1942年。中岛敦以中国古典文学故事为蓝本，融入现代哲思与自我剖析，将李白、韩愈、李陵等人的故事重新演绎，写出了人生的漂泊、自我的挣扎与理想与现实的冲突。其中《山月记》改编自《柳毅传》，讲述了诗人李徵因不甘平庸、又恐才华被埋没，最终化为猛虎的故事，道尽了文人的清高与孤独。这部作品因兼具古典韵味与现代思想，在日本文学史上占有重要地位，却因题材小众、语言晦涩，在国内鲜为人知，成为小众读者的珍藏之作。</p>
+        </div>
+        <div class="quotes-title">精选语录</div>
+        <div class="quotes-list">
+            <div class="quote-item">
+                <p>“我深怕自己本非美玉，故而不敢加以刻苦琢磨，却又半信自己是块美玉，故又不肯庸庸碌碌，与瓦砾为伍。”</p>
+                <div class="note">—— 来自《山月记》</div>
+            </div>
+            <div class="quote-item">
+                <p>“人之所以为人，在于他能够认清自己的局限，却又试图超越这种局限。”</p>
+                <div class="note">—— 来自《弟子》</div>
+            </div>
+            <div class="quote-item">
+                <p>“人生如寄，漂泊无依，我们都是天地间的过客。”</p>
+                <div class="note">—— 来自《李陵》</div>
+            </div>
+            <div class="quote-item">
+                <p>“才华是一把双刃剑，既能成就你，也能毁灭你。”</p>
+                <div class="note">—— 来自《山月记》</div>
+            </div>
+            <div class="quote-item">
+                <p>“我们总是在怀念过去，憧憬未来，却唯独忽略了当下的时光。”</p>
+                <div class="note">—— 来自《悟净出世》</div>
+            </div>
+        </div>
+        <a href="books.html" class="back-btn">返回全部书籍</a>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p>冷门书籍语录合集站 | 由AI生成 + 人类指挥打造</p>
+        <p class="copyright">© 2025 冷门语录合集 保留所有权利</p>
+    </div>
+
+    <!-- 交互脚本（导航+回到顶部+收藏按钮） -->
+    <script>
+        // 导航栏滚动吸顶
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scroll');
+            } else {
+                nav.classList.remove('scroll');
+            }
+        });
+
+        // 回到顶部
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 收藏按钮交互
+        const collectBtn = document.getElementById('collectBtn');
+        collectBtn.addEventListener('click', () => {
+            collectBtn.classList.toggle('active');
+            if (collectBtn.classList.contains('active')) {
+                collectBtn.innerHTML = '<span>已收藏本书</span><span>★</span>';
+                // 纯前端本地存储，刷新后仍保留状态
+                localStorage.setItem('collected_book_4', 'true');
+            } else {
+                collectBtn.innerHTML = '<span>收藏本书</span><span>★</span>';
+                localStorage.removeItem('collected_book_4');
+            }
+        });
+
+        // 页面加载时恢复收藏状态
+        window.onload = () => {
+            if (localStorage.getItem('collected_book_4') === 'true') {
+                collectBtn.classList.add('active');
+                collectBtn.innerHTML = '<span>已收藏本书</span><span>★</span>';
+            }
+        };
+    </script>
+</body>
+</html>

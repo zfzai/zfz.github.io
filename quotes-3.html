@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《局外人》语录 - 冷门书籍语录合集</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; }
+        /* 页面加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body { 
+            background-color: #f9f7f5; 
+            color: #333; 
+            line-height: 1.8; 
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        /* 响应式导航栏（滚动吸顶） */
+        .nav { 
+            background-color: #fff; 
+            padding: 15px 0; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            position: sticky; 
+            top: 0; 
+            z-index: 999; 
+            transition: all 0.3s ease;
+        }
+        .nav.scroll {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 12px 0;
+        }
+        .nav-container { 
+            width: 90%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #6d4c41; 
+            text-decoration: none;
+        }
+        .nav-links a { 
+            margin-left: 30px; 
+            text-decoration: none; 
+            color: #666; 
+            transition: color 0.3s; 
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #6d4c41;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { 
+            color: #6d4c41; 
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        /* 移动端导航适配 */
+        @media (max-width: 768px) {
+            .nav-links a {
+                margin-left: 15px;
+                font-size: 14px;
+            }
+            .logo {
+                font-size: 18px;
+            }
+        }
+        /* 书籍详情模块（升级排版+新增收藏按钮） */
+        .book-detail { 
+            width: 90%; 
+            max-width: 900px; 
+            margin: 60px auto; 
+            background-color: #fff; 
+            padding: 50px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+        }
+        .book-header { 
+            text-align: center; 
+            margin-bottom: 50px; 
+            position: relative;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0d4cc;
+        }
+        .book-header h1 { 
+            color: #6d4c41; 
+            font-size: 32px; 
+            margin-bottom: 15px; 
+            letter-spacing: 1px;
+        }
+        .book-header .author { 
+            color: #999; 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+        }
+        /* 新增：收藏按钮 */
+        .collect-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #fff;
+            color: #6d4c41;
+            border: 1px solid #6d4c41;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        .collect-btn:hover, .collect-btn.active {
+            background-color: #6d4c41;
+            color: #fff;
+        }
+        .book-intro { 
+            color: #666; 
+            margin-bottom: 50px; 
+            padding: 25px; 
+            background-color: #f9f7f5; 
+            border-radius: 10px; 
+            font-size: 15px;
+            line-height: 1.9;
+        }
+        .quotes-title { 
+            color: #6d4c41; 
+            font-size: 24px; 
+            margin-bottom: 30px; 
+            border-bottom: 2px solid #e0d4cc; 
+            padding-bottom: 15px; 
+        }
+        .quotes-list { 
+            margin-bottom: 35px; 
+        }
+        .quote-item { 
+            margin-bottom: 35px; 
+            padding-left: 25px; 
+            border-left: 3px solid #e0d4cc; 
+            transition: all 0.3s ease;
+        }
+        .quote-item:hover {
+            border-left-color: #6d4c41;
+            padding-left: 30px;
+        }
+        .quote-item p { 
+            font-style: italic; 
+            color: #555; 
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .quote-item .note {
+            color: #999;
+            font-size: 13px;
+            font-style: normal;
+        }
+        .back-btn { 
+            display: inline-block; 
+            text-decoration: none; 
+            color: #6d4c41; 
+            border: 1px solid #6d4c41; 
+            padding: 12px 24px; 
+            border-radius: 6px; 
+            transition: all 0.3s; 
+            font-size: 15px;
+        }
+        .back-btn:hover { 
+            background-color: #6d4c41; 
+            color: #fff; 
+        }
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background-color: #6d4c41;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(109, 76, 65, 0.3);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* 页脚 */
+        .footer { 
+            background-color: #6d4c41; 
+            color: #fff; 
+            text-align: center; 
+            padding: 30px 0; 
+            margin-top: 80px;
+        }
+        .footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        .footer .copyright {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav" id="nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">冷门语录合集</a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="books.html">全部书籍</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 书籍详情模块 -->
+    <div class="book-detail">
+        <div class="book-header">
+            <h1>《局外人》</h1>
+            <div class="author">[法] 阿尔贝·加缪 著 / 柳鸣九 译</div>
+            <button class="collect-btn" id="collectBtn">
+                <span>收藏本书</span>
+                <span>★</span>
+            </button>
+        </div>
+        <div class="book-intro">
+            <p>《局外人》是法国作家阿尔贝·加缪的成名作，也是荒诞派文学的经典代表作，发表于1942年。小说讲述了主人公默尔索在母亲去世后，没有表现出丝毫悲伤，反而在海边与女友约会、游泳，随后因偶然事件枪杀了一名阿拉伯人。在法庭上，法官和陪审团没有关注案件本身，反而因默尔索“不遵守世俗道德”“对母亲的死无动于衷”而判定他有罪，最终判处死刑。加缪通过默尔索的“不合群”，揭示了世俗社会的荒诞与虚伪——人们用既定的道德标准审判他人，却从未真正理解他人的内心。这部作品因颠覆了传统的道德观与价值观，长期以来备受小众读者推崇，成为理解荒诞哲学的入门之作。</p>
+        </div>
+        <div class="quotes-title">精选语录</div>
+        <div class="quotes-list">
+            <div class="quote-item">
+                <p>“今天，妈妈死了。也许是昨天，我不知道。”</p>
+                <div class="note">—— 来自《局外人》第一章</div>
+            </div>
+            <div class="quote-item">
+                <p>“我知道这世界我无处容身，只是，你凭什么审判我的灵魂？”</p>
+                <div class="note">—— 来自《局外人》第二章</div>
+            </div>
+            <div class="quote-item">
+                <p>“阳光太强烈了，让我无法睁开眼睛，也无法思考。”</p>
+                <div class="note">—— 来自《局外人》第一章</div>
+            </div>
+            <div class="quote-item">
+                <p>“世俗的道德，不过是人们为了互相约束而编造的谎言。”</p>
+                <div class="note">—— 来自《局外人》第二章</div>
+            </div>
+            <div class="quote-item">
+                <p>“在这个世界上，每个人都是局外人，只是有的人不愿意承认而已。”</p>
+                <div class="note">—— 来自《局外人》附录</div>
+            </div>
+        </div>
+        <a href="books.html" class="back-btn">返回全部书籍</a>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p>冷门书籍语录合集站 | 由AI生成 + 人类指挥打造</p>
+        <p class="copyright">© 2025 冷门语录合集 保留所有权利</p>
+    </div>
+
+    <!-- 交互脚本（导航+回到顶部+收藏按钮） -->
+    <script>
+        // 导航栏滚动吸顶
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scroll');
+            } else {
+                nav.classList.remove('scroll');
+            }
+        });
+
+        // 回到顶部
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 收藏按钮交互
+        const collectBtn = document.getElementById('collectBtn');
+        collectBtn.addEventListener('click', () => {
+            collectBtn.classList.toggle('active');
+            if (collectBtn.classList.contains('active')) {
+                collectBtn.innerHTML = '<span>已收藏本书</span><span>★</span>';
+                // 纯前端本地存储，刷新后仍保留状态
+                localStorage.setItem('collected_book_3', 'true');
+            } else {
+                collectBtn.innerHTML = '<span>收藏本书</span><span>★</span>';
+                localStorage.removeItem('collected_book_3');
+            }
+        });
+
+        // 页面加载时恢复收藏状态
+        window.onload = () => {
+            if (localStorage.getItem('collected_book_3') === 'true') {
+                collectBtn.classList.add('active');
+                collectBtn.innerHTML = '<span>已收藏本书</span><span>★</span>';
+            }
+        };
+    </script>
+</body>
+</html>

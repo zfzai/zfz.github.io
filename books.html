@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全部书籍 - 冷门书籍语录合集</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; }
+        /* 页面加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body { 
+            background-color: #f9f7f5; 
+            color: #333; 
+            line-height: 1.8; 
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        /* 响应式导航栏（滚动吸顶） */
+        .nav { 
+            background-color: #fff; 
+            padding: 15px 0; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            position: sticky; 
+            top: 0; 
+            z-index: 999; 
+            transition: all 0.3s ease;
+        }
+        .nav.scroll {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 12px 0;
+        }
+        .nav-container { 
+            width: 90%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #6d4c41; 
+            text-decoration: none;
+        }
+        .nav-links a { 
+            margin-left: 30px; 
+            text-decoration: none; 
+            color: #666; 
+            transition: color 0.3s; 
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #6d4c41;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { 
+            color: #6d4c41; 
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        /* 移动端导航适配 */
+        @media (max-width: 768px) {
+            .nav-links a {
+                margin-left: 15px;
+                font-size: 14px;
+            }
+            .logo {
+                font-size: 18px;
+            }
+        }
+        /* 全部书籍模块 */
+        .all-books {
+            width: 90%;
+            max-width: 1200px;
+            margin: 60px auto 80px;
+        }
+        .section-title {
+            color: #6d4c41;
+            font-size: 28px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #e0d4cc;
+        }
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 35px;
+        }
+        .book-item {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .book-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
+        .book-cover {
+            width: 100%;
+            height: 190px;
+            background-size: cover;
+            background-position: center;
+        }
+        .cover1 { background-image: url("https://img9.doubanio.com/view/subject/s/public/s2947183.jpg"); }
+        .cover2 { background-image: url("https://img9.doubanio.com/view/subject/s/public/s1076389.jpg"); }
+        .cover3 { background-image: url("https://img2.doubanio.com/view/subject/s/public/s1891178.jpg"); }
+        .cover4 { background-image: url("https://img2.doubanio.com/view/subject/s/public/s33661131.jpg"); }
+        .cover5 { background-image: url("https://img9.doubanio.com/view/subject/s/public/s2910299.jpg"); }
+        .book-detail {
+            padding: 25px;
+        }
+        .book-detail h3 {
+            color: #6d4c41;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .book-detail .author {
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+        .book-detail p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .quote-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #6d4c41;
+            border: 1px solid #6d4c41;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .quote-btn:hover {
+            background-color: #6d4c41;
+            color: #fff;
+        }
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background-color: #6d4c41;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(109, 76, 65, 0.3);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* 页脚 */
+        .footer { 
+            background-color: #6d4c41; 
+            color: #fff; 
+            text-align: center; 
+            padding: 30px 0; 
+            margin-top: 80px;
+        }
+        .footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        .footer .copyright {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav" id="nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">冷门语录合集</a>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="books.html">全部书籍</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全部书籍模块 -->
+    <div class="all-books">
+        <h2 class="section-title">全部冷门书籍</h2>
+        <div class="book-grid">
+            <!-- 书籍1：惶然录 -->
+            <div class="book-item">
+                <div class="book-cover cover1"></div>
+                <div class="book-detail">
+                    <h3>《惶然录》</h3>
+                    <div class="author">[葡] 费尔南多·佩索阿 著 / 韩少功 译</div>
+                    <p>以“伯纳多·索阿雷斯”的笔名，记录日常的琐碎与内心的哲思，是“无人知晓的伟大作品”</p>
+                    <a href="quotes-1.html" class="quote-btn">查看语录</a>
+                </div>
+            </div>
+            <!-- 书籍2：人间失格 -->
+            <div class="book-item">
+                <div class="book-cover cover2"></div>
+                <div class="book-detail">
+                    <h3>《人间失格》</h3>
+                    <div class="author">[日] 太宰治 著 / 杨伟 译</div>
+                    <p>太宰治绝笔之作，剖析人性的脆弱与孤独，在绝望中探寻存在的价值</p>
+                    <a href="quotes-2.html" class="quote-btn">查看语录</a>
+                </div>
+            </div>
+            <!-- 书籍3：局外人 -->
+            <div class="book-item">
+                <div class="book-cover cover3"></div>
+                <div class="book-detail">
+                    <h3>《局外人》</h3>
+                    <div class="author">[法] 阿尔贝·加缪 著 / 柳鸣九 译</div>
+                    <p>荒诞派文学经典，讲述一个“不合群”的人，被世俗审判的故事</p>
+                    <a href="quotes-3.html" class="quote-btn">查看语录</a>
+                </div>
+            </div>
+            <!-- 书籍4：山月记 -->
+            <div class="book-item">
+                <div class="book-cover cover4"></div>
+                <div class="book-detail">
+                    <h3>《山月记》</h3>
+                    <div class="author">[日] 中岛敦 著 / 徐建雄 译</div>
+                    <p>以中国古典故事为蓝本，融入现代哲思，写尽人生的漂泊与自我挣扎</p>
+                    <a href="quotes-4.html" class="quote-btn">查看语录</a>
+                </div>
+            </div>
+            <!-- 书籍5：窄门 -->
+            <div class="book-item">
+                <div class="book-cover cover5"></div>
+                <div class="book-detail">
+                    <h3>《窄门》</h3>
+                    <div class="author">[法] 安德烈·纪德 著 / 李玉民 译</div>
+                    <p>探讨爱情与信仰、欲望与理性的冲突，文字细腻优美，充满宗教情怀</p>
+                    <a href="quotes-5.html" class="quote-btn">查看语录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p>冷门书籍语录合集站 | 由AI生成 + 人类指挥打造</p>
+        <p class="copyright">© 2025 冷门语录合集 保留所有权利</p>
+    </div>
+
+    <!-- 交互脚本 -->
+    <script>
+        // 导航栏滚动吸顶
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scroll');
+            } else {
+                nav.classList.remove('scroll');
+            }
+        });
+
+        // 回到顶部
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
